@@ -13,7 +13,6 @@ camera.set(4, 720)
 
 # Importando todos os elementos
 imgDefundo = cv2.imread("elementos/Fundo.png")
-imgGameover = cv2.imread("elementos/gameOver.png")
 imgGameOverPlayer1 = cv2.imread("elementos/gameOver_player1.png")
 imgGameOverPlayer2 = cv2.imread("elementos/gameOver_player2.png")
 imgbola = cv2.imread("elementos/Bola.png", cv2.IMREAD_UNCHANGED)
@@ -56,14 +55,14 @@ while True:
             h1, w1, _ = imgp2.shape
             #print(h1)
 
-            y1 = y - h1 // 2
+            y1 = y - 179 // 2
 
-            y1 = np.clip(y1, 20, 415)
+            y1 = np.clip(y1, 5, 380)
             # Desenhando e numerando os pontos dos dedos
             lmList = hand['lmList']
             for i, lm in enumerate(lmList):
                 cv2.circle(img, (lm[0], lm[1]), 5, (0, 0, 255), cv2.FILLED)
-                #cv2.putText(img, str(i), (lm[0], lm[1]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
+                cv2.putText(img, str(i), (lm[0], lm[1]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
 
             # Verificando se os pontos 8 e 4 se encontram
             if len(lmList) > 8 and len(lmList) > 4:
@@ -117,8 +116,8 @@ while True:
             img = cvzone.overlayPNG(img, imgbola, p_bola)
 
             # Texto de pontuação
-            cv2.putText(img, str(pontos[0]), (300, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
-            cv2.putText(img, str(pontos[1]), (900, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+            cv2.putText(img, str(pontos[0]), (300, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+            cv2.putText(img, str(pontos[1]), (915, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255,255), 5)
 
     # Redimensionando e posicionando a imagem pequena da câmera na moldura
     img_pequena = cv2.resize(img_pequena, (moldura_width, moldura_height))
