@@ -12,10 +12,11 @@ camera.set(4, 720)
 
 # Importando todos os elementos
 imgDefundo = cv2.imread("elementos/Fundo.png")
-imgGameover = cv2.imread("elementos/gameOver.png")
-imgbola = cv2.imread("elementos/Bola.png", cv2.IMREAD_UNCHANGED)
+imgGameOverPlayer1 = cv2.imread("elementos/gameOver_player1.png")
+imgGameOverPlayer2 = cv2.imread("elementos/gameOver_player2.png")
+imgBola = cv2.imread("elementos/Bola.png", cv2.IMREAD_UNCHANGED)
 imgP1 = cv2.imread("elementos/Player1.png", cv2.IMREAD_UNCHANGED)
-imgp2 = cv2.imread("elementos/Player2.png", cv2.IMREAD_UNCHANGED)
+imgP2 = cv2.imread("elementos/Player2.png", cv2.IMREAD_UNCHANGED)
 
 # Detector de mão
 detector = HandDetector(detectionCon=0.8, maxHands=2)
@@ -64,7 +65,7 @@ while True:
                     pontos[0] += 1
 
             if hand['type'] == "Right":
-                img = cvzone.overlayPNG(img, imgp2, (1195, y1))
+                img = cvzone.overlayPNG(img, imgP2, (1195, y1))
                 if 1195 - 50 < p_bola[0] < 1195 and y1 < p_bola[1] < y1 + h1:
                     vel_x = -vel_x
                     p_bola[0] -= 30
@@ -72,15 +73,11 @@ while True:
 
     # Game Over
     if p_bola[0] < 40:
-        img = imgGameover
-        cv2.putText(img, str("Player 2 venceu").zfill(2), (700, 500), cv2.FONT_HERSHEY_COMPLEX,
-                    1, (200, 0, 200), 3)
+        img = imgGameOverPlayer1
 
     elif p_bola[0] > 1200:
-        img = imgGameover
-        cv2.putText(img, str("Player 1 venceu").zfill(2), (700, 500), cv2.FONT_HERSHEY_COMPLEX,
-                    1, (200, 0, 200), 3)
-    
+        img = imgGameOverPlayer2
+
     else:
         # Movendo a bola
         if p_bola[1] >= 500 or p_bola[1] <= 10:
@@ -90,11 +87,11 @@ while True:
         p_bola[1] += vel_y
 
         # Colocando a bola
-        img = cvzone.overlayPNG(img, imgbola, p_bola)
+        img = cvzone.overlayPNG(img, imgBola, p_bola)
 
         # Texto de pontuação
         cv2.putText(img, str(pontos[0]), (300, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
-        cv2.putText(img, str(pontos[1]), (900, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+        cv2.putText(img, str(pontos[1]), (915, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
 
     # Redimensionando e posicionando a imagem pequena da câmera na moldura
     img_pequena = cv2.resize(img_pequena, (moldura_width, moldura_height))
