@@ -63,7 +63,7 @@ while True:
             lmList = hand['lmList']
             for i, lm in enumerate(lmList):
                 cv2.circle(img, (lm[0], lm[1]), 5, (0, 0, 255), cv2.FILLED)
-                cv2.putText(img, str(i), (lm[0], lm[1]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
+                #cv2.putText(img, str(i), (lm[0], lm[1]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
 
             # Verificando se os pontos 8 e 4 se encontram
             if len(lmList) > 8 and len(lmList) > 4:
