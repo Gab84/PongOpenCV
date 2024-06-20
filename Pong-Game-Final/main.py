@@ -14,9 +14,9 @@ camera.set(4, 720)
 imgDefundo = cv2.imread("elementos/Fundo.png")
 imgGameOverPlayer1 = cv2.imread("elementos/gameOver_player1.png")
 imgGameOverPlayer2 = cv2.imread("elementos/gameOver_player2.png")
-imgBola = cv2.imread("elementos/Bola.png", cv2.IMREAD_UNCHANGED)
+imgbola = cv2.imread("elementos/Bola.png", cv2.IMREAD_UNCHANGED)
 imgP1 = cv2.imread("elementos/Player1.png", cv2.IMREAD_UNCHANGED)
-imgP2 = cv2.imread("elementos/Player2.png", cv2.IMREAD_UNCHANGED)
+imgp2 = cv2.imread("elementos/Player2.png", cv2.IMREAD_UNCHANGED)
 
 # Detector de mão
 detector = HandDetector(detectionCon=0.8, maxHands=2)
@@ -53,9 +53,9 @@ while True:
 
             h1, w1, _ = imgP1.shape
 
-            y1 = y - h1 // 2
+            y1 = y - 179 // 2
 
-            y1 = np.clip(y1, 20, 415)
+            y1 = np.clip(y1, 5, 380)
             # Desenhando e numerando os pontos dos dedos
             lmList = hand['lmList']
             for i, lm in enumerate(lmList):
