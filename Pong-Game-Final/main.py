@@ -103,8 +103,8 @@ while True:
         img = cvzone.overlayPNG(img, imgBola, p_bola)
 
         # Texto de pontuação
-        cv2.putText(img, str(pontos[0]), (300, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
-        cv2.putText(img, str(pontos[1]), (915, 650), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+        cv2.putText(img, str(pontos[0]), (300, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+        cv2.putText(img, str(pontos[1]), (915, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
 
     # Redimensionando e posicionando a imagem pequena da câmera na moldura
     img_pequena = cv2.resize(img_pequena, (moldura_width, moldura_height))
