@@ -3,7 +3,8 @@ import cvzone
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 import sys
-
+import pyautogui
+from time import sleep
 # Criando a câmera
 camera = cv2.VideoCapture(0)
 # Definindo o tamanho da câmera
@@ -19,7 +20,7 @@ imgP1 = cv2.imread("elementos/Player1.png", cv2.IMREAD_UNCHANGED)
 imgp2 = cv2.imread("elementos/Player2.png", cv2.IMREAD_UNCHANGED)
 
 # Detector de mão
-detector = HandDetector(detectionCon=0.8, maxHands=2)
+detector = HandDetector(detectionCon=0.8,)
 
 # Variáveis
 p_bola = [100, 100]
@@ -33,6 +34,11 @@ moldura_width = 213
 moldura_height = 120
 moldura_x = 30  # Ajuste para mover a moldura para a direita
 moldura_y = 570  # Ajuste para mover a moldura para cima
+
+def veloc():
+    global vel_x
+    vel_x +=5
+    return vel_x
 
 while True:
     _, img = camera.read()
@@ -61,7 +67,6 @@ while True:
             for i, lm in enumerate(lmList):
                 cv2.circle(img, (lm[0], lm[1]), 5, (0, 0, 255), cv2.FILLED)
                 #cv2.putText(img, str(i), (lm[0], lm[1]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
-
             # Verificando se os pontos 8 e 4 se encontram
             if len(lmList) > 8 and len(lmList) > 4:
                 x8, y8 = lmList[12][0], lmList[12][1]
@@ -74,14 +79,17 @@ while True:
                 img = cvzone.overlayPNG(img, imgP1, (59, y1))
                 if 59 < p_bola[0] < 59 + w1 and y1 < p_bola[1] < y1 + h1:
                     vel_x = -vel_x
-                    p_bola[0] += 30
+                    veloci = veloc()
+                    p_bola[0] += veloci
                     pontos[0] += 1
 
             if hand['type'] == "Right":
-                img = cvzone.overlayPNG(img, imgP2, (1195, y1))
+                img = cvzone.overlayPNG(img, imgp2, (1195, y1))
                 if 1195 - 50 < p_bola[0] < 1195 and y1 < p_bola[1] < y1 + h1:
                     vel_x = -vel_x
-                    p_bola[0] -= 30
+                    veloci = 0
+                    veloci += 10
+                    p_bola[0] -= veloci
                     pontos[1] += 1
 
     # Game Over
@@ -100,11 +108,11 @@ while True:
         p_bola[1] += vel_y
 
         # Colocando a bola
-        img = cvzone.overlayPNG(img, imgBola, p_bola)
+        img = cvzone.overlayPNG(img, imgbola, p_bola)
 
         # Texto de pontuação
         cv2.putText(img, str(pontos[0]), (300, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
-        cv2.putText(img, str(pontos[1]), (915, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
+        cv2.putText(img, str(pontos[1]), (915, 660), cv2.FONT_HERSHEY_COMPLEX, 3, (255, 255, 255), 5)
 
     # Redimensionando e posicionando a imagem pequena da câmera na moldura
     img_pequena = cv2.resize(img_pequena, (moldura_width, moldura_height))
@@ -114,8 +122,8 @@ while True:
     key = cv2.waitKey(1)
     if key == ord('r'):
         p_bola = [100, 100]
-        vel_x = 15
-        vel_y = 15
+        vel_x = 20
+        vel_y = 20
         gameOver = False
         pontos = [0, 0]
         imgGameover = cv2.imread("elementos/gameOver.png")
